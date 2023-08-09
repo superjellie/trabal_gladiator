@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Monster
   - Tile
+  - Wall
+  - Floor
   layers:
   - Default
   - TransparentFX

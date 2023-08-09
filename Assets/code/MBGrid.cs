@@ -19,7 +19,7 @@ public class MBGrid : MonoBehaviour {
 
     // May return null
     public GameObject InstantiateAt(GameObject prefab, Vector2Int pos) {
-        Debug.Log("MBGrid: Instantiate " + prefab + " At " + pos.ToString());
+        // Debug.Log("MBGrid: Instantiate " + prefab + " At " + pos.ToString());
         if (!this.rect.Contains(pos)) return null;
         if (this.GetObjectAt(pos) != null) return null;
         GameObject instance = GameObject.Instantiate(prefab, this.transform);

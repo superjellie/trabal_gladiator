@@ -13,6 +13,4 @@ public static class JRNG {
         state = x;
         return x;
     }
-    
-
 }

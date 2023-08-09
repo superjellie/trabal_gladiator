@@ -24,10 +24,8 @@ public class MBInteriorRoomsPG: MonoBehaviour {
     private int maxRecursionLevel = 10;
 
     private MBGrid grid;
-    private CompositeCollider2D collider;
     /* message */ void Awake() {
         this.grid = this.GetComponent<MBGrid>();
-        this.collider = this.GetComponent<CompositeCollider2D>();
     }
 
     /* message */ void Start() {
@@ -62,8 +60,9 @@ public class MBInteriorRoomsPG: MonoBehaviour {
         );
 
 
-        if (this.collider != null)
-            this.collider.GenerateGeometry();
+        if (this.TryGetComponent<CompositeCollider2D>(
+            out CompositeCollider2D col
+        )) col.GenerateGeometry();
     }
 
     

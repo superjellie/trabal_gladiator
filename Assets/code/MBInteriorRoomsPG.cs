@@ -32,7 +32,9 @@ public class MBInteriorRoomsPG: MonoBehaviour {
 
     /* message */ void Start() {
 
-        for (int x = this.grid.rect.min.x; x < this.grid.rect.max.x; ++x) {
+        RectInt rect = this.grid.rect; // just to shorten lines
+
+        for (int x = rect.min.x; x < rect.max.x; ++x) {
             this.grid.InstantiateAt(tileWall, 
                 new Vector2Int(x, this.grid.rect.min.y)
             );
@@ -42,21 +44,21 @@ public class MBInteriorRoomsPG: MonoBehaviour {
             );
         }
 
-        for (int y = this.grid.rect.min.y + 1; y < this.grid.rect.max.y - 1; ++y) {
+        for (int y = rect.min.y + 1; y < rect.max.y - 1; ++y) {
             this.grid.InstantiateAt(tileWall, 
-                new Vector2Int(this.grid.rect.min.x, y)
+                new Vector2Int(rect.min.x, y)
             );
 
             this.grid.InstantiateAt(tileWall, 
-                new Vector2Int(this.grid.rect.max.x - 1, y)
+                new Vector2Int(rect.max.x - 1, y)
             );
         }
 
         GenerateRect(new RectInt(
-                this.grid.rect.min.x + 1, this.grid.rect.min.y + 1,
-                this.grid.rect.width - 2, this.grid.rect.height - 2
-            ),
-            /*false,*/ maxRecursionLevel
+                rect.min.x + 1, rect.min.y + 1,
+                rect.width - 2, rect.height - 2
+            ), 
+            maxRecursionLevel
         );
 
 
@@ -87,7 +89,7 @@ public class MBInteriorRoomsPG: MonoBehaviour {
         int maxWallX = myRect.max.x - minSize;
 
         if (minWallX >= maxWallX) {
-            return this.GenerateRect(rect/*, !isVertical*/, recLevel - 1);
+            return this.GenerateRect(rect, recLevel - 1);
         }
 
         int wallSpan = maxWallX - minWallX;
@@ -105,8 +107,8 @@ public class MBInteriorRoomsPG: MonoBehaviour {
         lftRect = isVertical ? JMisc.FlipRectInt(lftRect) : lftRect;
         rhtRect = isVertical ? JMisc.FlipRectInt(rhtRect) : rhtRect;
 
-        int lftWall = this.GenerateRect(lftRect/*, !isVertical*/, recLevel - 1);
-        int rhtWall = this.GenerateRect(rhtRect/*, !isVertical*/, recLevel - 1);
+        int lftWall = this.GenerateRect(lftRect, recLevel - 1);
+        int rhtWall = this.GenerateRect(rhtRect, recLevel - 1);
 
         int doorPos = lftWall;
         while (doorPos == lftWall || doorPos == rhtWall) 

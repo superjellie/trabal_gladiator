@@ -40,7 +40,12 @@ public class MBGrid : MonoBehaviour {
 
 
 #if UNITY_EDITOR
+
+    [SerializeField]
+    private bool drawGizmo = true;
+
     /* message */ void OnDrawGizmos() {
+        if (!this.drawGizmo) return;
         Handles.color = Color.yellow;
         for (int x = this.rect.min.x; x <= this.rect.max.x; ++x) {
             Vector3 localNx = new Vector3(x - .5f, this.rect.max.y - .5f, 0f);

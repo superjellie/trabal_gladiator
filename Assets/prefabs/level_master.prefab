@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2390397183832228239}
   - component: {fileID: 4425274522605503052}
   m_Layer: 0
-  m_Name: grid
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
     y: -10
     width: 20
     height: 20
+  drawGizmo: 1
 --- !u!114 &2390397183832228239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +70,21 @@ MonoBehaviour:
   tileDoor: {fileID: 4472776983402652151, guid: 503faef63f8b80b43bcaa36da110533e, type: 3}
   minRoomSize: {x: 5, y: 5}
   maxRecursionLevel: 10
+  onGenerationComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4425274522605503052}
+        m_TargetAssemblyTypeName: MBEnvironmentPG, Assembly-CSharp
+        m_MethodName: Generate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4425274522605503052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,9 +97,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e75ef0488988f42ad2724aa9070ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagFloor: {fileID: -8559706714719974604, guid: aff2be26127239c43860bc0af2dabd41, type: 3}
-  tagWall: {fileID: -5002378154378541956, guid: a3ae5965e2a46d5459f8667261df3166, type: 3}
-  envTorch: {fileID: 0}
+  rngState: 43707
+  envPrefab: {fileID: 743771042611330715, guid: 497e7cb8e8d8b9d43b62ffaac55186a2, type: 3}
+  minCount: 5
+  maxCount: 10
+  placeOn: {fileID: -5002378154378541956, guid: a3ae5965e2a46d5459f8667261df3166, type: 3}
+  bgGrid: {fileID: 7607231838606650215}
+  envGrid: {fileID: 5888496826018816965}
+--- !u!1 &5873513347838111366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7768508413263622088}
+  - component: {fileID: 5888496826018816965}
+  m_Layer: 0
+  m_Name: environment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7768508413263622088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873513347838111366}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8754194911307053989}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5888496826018816965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873513347838111366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b07749357c744946b884a1a6472bd67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect:
+    x: -10
+    y: -10
+    width: 20
+    height: 20
+  drawGizmo: 0
 --- !u!1 &6220034126905099398
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +183,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8686544791498661263}
+  - {fileID: 7768508413263622088}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

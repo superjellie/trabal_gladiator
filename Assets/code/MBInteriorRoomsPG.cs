@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(MBGrid))]
 public class MBInteriorRoomsPG: MonoBehaviour {
@@ -24,11 +25,20 @@ public class MBInteriorRoomsPG: MonoBehaviour {
     private int maxRecursionLevel = 10;
 
     private MBGrid grid;
+
+    [SerializeField]
+    private UnityEvent onGenerationComplete = new UnityEvent();
+    
     /* message */ void Awake() {
         this.grid = this.GetComponent<MBGrid>();
     }
 
     /* message */ void Start() {
+        this.Generate();
+    }
+
+
+    public void Generate() {
 
         RectInt rect = this.grid.rect; // just to shorten lines
 
@@ -63,6 +73,8 @@ public class MBInteriorRoomsPG: MonoBehaviour {
         if (this.TryGetComponent<CompositeCollider2D>(
             out CompositeCollider2D col
         )) col.GenerateGeometry();
+
+        this.onGenerationComplete.Invoke();
     }
 
     

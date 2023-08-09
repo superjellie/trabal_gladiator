@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 7607231838606650215}
   - component: {fileID: 2390397183832228239}
   - component: {fileID: 4425274522605503052}
+  - component: {fileID: 5152920635612159624}
+  - component: {fileID: 2308090720806009146}
+  - component: {fileID: 7015398715851796906}
   m_Layer: 0
   m_Name: background
   m_TagString: Untagged
@@ -85,6 +88,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5152920635612159624}
+        m_TargetAssemblyTypeName: MBEnvironmentPG, Assembly-CSharp
+        m_MethodName: Generate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2308090720806009146}
+        m_TargetAssemblyTypeName: MBEnvironmentPG, Assembly-CSharp
+        m_MethodName: Generate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7015398715851796906}
+        m_TargetAssemblyTypeName: MBEnvironmentPG, Assembly-CSharp
+        m_MethodName: Generate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4425274522605503052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,11 +136,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e75ef0488988f42ad2724aa9070ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rngState: 43707
+  rngState: 2323
   envPrefab: {fileID: 743771042611330715, guid: 497e7cb8e8d8b9d43b62ffaac55186a2, type: 3}
+  minCount: 10
+  maxCount: 20
+  placeOn: {fileID: -5002378154378541956, guid: a3ae5965e2a46d5459f8667261df3166, type: 3}
+  bgGrid: {fileID: 7607231838606650215}
+  envGrid: {fileID: 5888496826018816965}
+--- !u!114 &5152920635612159624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022624389010004891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e75ef0488988f42ad2724aa9070ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rngState: 43707
+  envPrefab: {fileID: 6755577597632498437, guid: 6014a858dfb2f19408c3e36a512f8b3f, type: 3}
   minCount: 5
   maxCount: 10
-  placeOn: {fileID: -5002378154378541956, guid: a3ae5965e2a46d5459f8667261df3166, type: 3}
+  placeOn: {fileID: -8559706714719974604, guid: aff2be26127239c43860bc0af2dabd41, type: 3}
+  bgGrid: {fileID: 7607231838606650215}
+  envGrid: {fileID: 5888496826018816965}
+--- !u!114 &2308090720806009146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022624389010004891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e75ef0488988f42ad2724aa9070ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rngState: 43707
+  envPrefab: {fileID: 6755577597632498437, guid: 8b8627150483624479791806f393b33c, type: 3}
+  minCount: 5
+  maxCount: 10
+  placeOn: {fileID: -8559706714719974604, guid: aff2be26127239c43860bc0af2dabd41, type: 3}
+  bgGrid: {fileID: 7607231838606650215}
+  envGrid: {fileID: 5888496826018816965}
+--- !u!114 &7015398715851796906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022624389010004891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e75ef0488988f42ad2724aa9070ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rngState: 43707
+  envPrefab: {fileID: 6755577597632498437, guid: 07b32ca229dc44a4d898fa81632a9f9a, type: 3}
+  minCount: 5
+  maxCount: 10
+  placeOn: {fileID: -8559706714719974604, guid: aff2be26127239c43860bc0af2dabd41, type: 3}
   bgGrid: {fileID: 7607231838606650215}
   envGrid: {fileID: 5888496826018816965}
 --- !u!1 &5873513347838111366

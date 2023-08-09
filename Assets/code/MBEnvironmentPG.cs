@@ -43,7 +43,7 @@ public class MBEnvironmentPG : MonoBehaviour {
             + (int)((long)JRNG.Xorshift32(ref this.rngState) % countSpan);
 
         Vector2Int[] sample = new Vector2Int[count];
-        int itemIndex = 0;
+        int index = 0;
 
         for (int x = minX; x < maxX; ++x)
         for (int y = minY; y < maxY; ++y) {
@@ -51,11 +51,10 @@ public class MBEnvironmentPG : MonoBehaviour {
             GameObject tile = bgGrid.GetObjectAt(pos);
             GameObject env = envGrid.GetObjectAt(pos);
             if (env != null || !MBTag.HasTag(tile, this.placeOn)) continue;
-            int idx = itemIndex < count ? itemIndex 
-                : (int)((long)JRNG.Xorshift32(ref this.rngState) % count);
-            if (idx < count) 
-                sample[idx] = pos;
-            itemIndex++;
+            int targetSampleIdx = index < count ? index 
+                : (int)((long)JRNG.Xorshift32(ref this.rngState) % (index + 1));
+            if (targetSampleIdx < count) sample[targetSampleIdx] = pos;
+            index++;
         }
 
         foreach (Vector2Int pos in sample) 

@@ -52,7 +52,7 @@ public class MBInteriorRoomsPG: MonoBehaviour {
             );
         }
 
-        GenerateRect(new RectInt(
+        this.GenerateRect(new RectInt(
                 rect.min.x + 1, rect.min.y + 1,
                 rect.width - 2, rect.height - 2
             ), 
@@ -67,9 +67,7 @@ public class MBInteriorRoomsPG: MonoBehaviour {
 
     
     // returns wall position
-    private int GenerateRect(
-        RectInt rect, int recLevel
-    ) {
+    private int GenerateRect(RectInt rect, int recLevel) {
         if (recLevel == 0) {
             for (int x = rect.min.x; x < rect.max.x; ++x)
             for (int y = rect.min.y; y < rect.max.y; ++y)
@@ -87,13 +85,12 @@ public class MBInteriorRoomsPG: MonoBehaviour {
         int minWallX = myRect.min.x + minSize;
         int maxWallX = myRect.max.x - minSize;
 
-        if (minWallX >= maxWallX) {
+        if (minWallX >= maxWallX) 
             return this.GenerateRect(rect, recLevel - 1);
-        }
 
         int wallSpan = maxWallX - minWallX;
-        int wallX = minWallX + 
-            (int)((long)JRNG.Xorshift32(ref this.rngState) % wallSpan);
+        int wallX = minWallX 
+            + (int)((long)JRNG.Xorshift32(ref this.rngState) % wallSpan);
 
         RectInt lftRect = new RectInt(
             myRect.min.x, myRect.y, wallX - myRect.min.x, myRect.height

@@ -259,7 +259,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8754194911307053989}
-  - component: {fileID: 703925255419706556}
   m_Layer: 0
   m_Name: level_master
   m_TagString: Untagged
@@ -284,25 +283,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &703925255419706556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6220034126905099398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df601434869e47d4fbf87660d998f921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewBlockMask:
-    serializedVersion: 2
-    m_Bits: 0
-  walkBlockMask:
-    serializedVersion: 2
-    m_Bits: 0
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  grid: {fileID: 7607231838606650215}

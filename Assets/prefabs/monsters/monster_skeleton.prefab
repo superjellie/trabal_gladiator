@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7890499197519040766}
+  - component: {fileID: 5077932291047681345}
   - component: {fileID: 4119425601093745330}
   - component: {fileID: -2479875031052519098}
   - component: {fileID: -815539644582959520}
@@ -35,6 +36,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5077932291047681345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508070228410173220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9204a8056874c6a40945f44fc9d4c7f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rngState: 43707
+  viewBlockingMask:
+    serializedVersion: 2
+    m_Bits: 768
+  moveBlockingMask:
+    serializedVersion: 2
+    m_Bits: 768
+  playersMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &4119425601093745330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +146,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 192

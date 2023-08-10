@@ -10,6 +10,7 @@ public static class JMisc {
 
     public static int MinI(int x, int y) { return x < y ? x : y; }
     public static int MaxI(int x, int y) { return x < y ? y : x; }
+    
     public static Vector2Int Pos2D(GameObject go) {
         return new Vector2Int(
             Mathf.RoundToInt(go.transform.position.x), 
@@ -35,5 +36,13 @@ public static class JMisc {
             Mathf.Abs(a.y) < Mathf.Abs(b.y) ? a.y : b.y,
             Mathf.Abs(a.z) < Mathf.Abs(b.z) ? a.z : b.z
         );
+    }
+
+    public static Vector2 ToVector2(Vector3 v) { 
+        return new Vector2(v.x, v.y); 
+    }
+
+    public static Vector3 ToVector3(Vector2 v) { 
+        return new Vector3(v.x, v.y, 0f); 
     }
 }

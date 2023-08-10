@@ -14,4 +14,15 @@ public static class JRNG {
         return x;
     }
 
+    public static float Xorshift32f(ref uint state) {
+        uint rndInt = JRNG.Xorshift32(ref state) % (1 << 20);
+        return (float) rndInt / (float) (1 << 20);
+    }
+
+    public static Vector2 Xorshift32fInUnitCircle(ref uint state) {
+        float r     = Mathf.Sqrt(JRNG.Xorshift32f(ref state));
+        float theta = 2 * JRNG.Xorshift32f(ref state) * Mathf.PI;
+        return new Vector2(r * Mathf.Cos(theta), r * Mathf.Sin(theta));
+    }
+
 }

@@ -8,12 +8,17 @@ public class MBTag : MonoBehaviour {
     private MBTag parentTag;
 
     public static bool HasTag(GameObject go, MBTag tag, int rec = 5) {
-        if (rec > 0 && go.TryGetComponent<MBTag>(out MBTag goTag)) {
-            return goTag == tag 
-                || (goTag.parentTag != null
+        if (go == null || tag == null) return false;
+        if (rec == 0) return false;
+
+        IEnumerable<MBTag> goTags = go.GetComponents<MBTag>();
+        foreach (MBTag goTag in goTags)
+            if (goTag == tag || (
+                    goTag.parentTag != null
                     && MBTag.HasTag(goTag.parentTag.gameObject, tag, rec - 1)
-                );
-        }
+                )
+            ) return true;
+        
         return false;
     }
 

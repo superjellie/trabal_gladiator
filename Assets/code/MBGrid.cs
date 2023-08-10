@@ -13,8 +13,16 @@ public class MBGrid : MonoBehaviour {
 
     private GameObject[,] map;
 
+    // // maps for algorithms
+    // private int[,]       stepMap;
+    // private Vector2Int[] positionQueue;
+    // private int          positionQueueSize;
+
     /* message */ void Awake() {
         this.map = new GameObject[this.rect.width, this.rect.height];
+        // this.stepMap = new int[this.rect.width, this.rect.height];
+        // this.positionQueue = new Vector2Int[this.rect.width * this.rect.height];
+        // this.positionQueueSize = 0;
     } 
 
     // May return null
@@ -37,6 +45,26 @@ public class MBGrid : MonoBehaviour {
             pos.y - this.rect.min.y
         ];
     }
+
+    // public Vector2Int[] FindPath(
+    //     Vector2Int from, Vector2Int to, 
+    //     Func<float, Vector2Int> tileCost
+    // ) {
+    //     const int NOT_SEEN = 1 << 31;
+    //     this.positionQueueSize = 0;
+    //     for (int x = 0; x < this.rect.width;  ++x)
+    //     for (int y = 0; y < this.rect.height; ++y)
+    //         this.stepMap[x, y] = NOT_SEEN;
+
+    //     this.positionQueue[this.positionQueueSize++] = from;
+    //     this.stepMap[from.x, from.y] = 0;
+        
+    //     // A* algorithm
+    //     while (this.positionQueueSize > 0) {
+    //         Vector2Int pos = this.positionQueue[--this.positionQueueSize];
+    //         int steps = this.stepMap[from.x, from.y];
+    //     }
+    // }
 
 
 #if UNITY_EDITOR

@@ -26,7 +26,6 @@ public class MBEnvironmentPG : MonoBehaviour {
     private MBGrid envGrid;
 
     public void Generate() {
-        Debug.Log("Hi");
         if (this.bgGrid  == null) return;
         if (this.envGrid == null) return;
 

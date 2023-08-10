@@ -14,16 +14,13 @@ public class MBPlayerMove : MonoBehaviour
     
     public void Awake() {
         this.rigidbody2d = this.GetComponent<Rigidbody2D>();
-        //playerInput.onActionTriggered += PlayerInput_onActionTriggered; 
-        /*Tribal_gladiator tribalGladiator  = new Tribal_gladiator();
-        tribalGladiator.Player.Enable();
-        tribalGladiator.Player.Move.performed += Move_performed;*/
     }
     
-    public void Move_performed(InputAction.CallbackContext context) {
+    public void MovePerformed(InputAction.CallbackContext context) {
         Debug.Log(context);
         Vector2 inputVector = context.ReadValue<Vector2>();
-        rigidbody2d.velocity = new Vector2(inputVector.x, inputVector.y) * moveSpeed;
+        this.rigidbody2d.velocity = 
+            new Vector2(inputVector.x, inputVector.y) * this.moveSpeed;
     }
 
 }

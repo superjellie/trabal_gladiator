@@ -166,7 +166,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -2201375221025970005}
         m_TargetAssemblyTypeName: MBPlayerMove, Assembly-CSharp
-        m_MethodName: Move_performed
+        m_MethodName: MovePerformed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -267,7 +267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rigidbody2d: {fileID: 6827137058793234238}
 --- !u!1 &8277699558244942369
 GameObject:
   m_ObjectHideFlags: 0

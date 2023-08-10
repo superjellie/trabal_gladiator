@@ -298,10 +298,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewBlockMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   walkBlockMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 64

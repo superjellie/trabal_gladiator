@@ -70,15 +70,20 @@ public class MBMonsterAI : MonoBehaviour {
         this.body.MovePosition(this.transform.position + moveby);
     }
 
+    private bool      isChasingTarget = false;
+    private Transform chaseTarget;
     public IEnumerator ChaseTarget(
         GameObject target, float acceptRadius, float speed 
     ) { 
+        this.isChasingTarget = true;
+        this.chaseTarget = target.transform;
         while (this.IsVisible(target.transform.position)
             && JMisc.Distance(this.gameObject, target) > acceptRadius
         ) {
             yield return new WaitForFixedUpdate();
             this.DeltaMoveTo(target.transform.position, speed);
         }
+        this.isChasingTarget = false;
     }
 
     private bool    isWandering = false;
@@ -119,6 +124,11 @@ public class MBMonsterAI : MonoBehaviour {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(this.transform.position, this.wanderTarget);
             Gizmos.DrawSphere(this.wanderTarget, .1f);
+        } 
+        if (this.isChasingTarget) {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(this.transform.position, this.chaseTarget.position);
+            Gizmos.DrawSphere(this.chaseTarget.position, .1f);
         }   
     }
 #endif

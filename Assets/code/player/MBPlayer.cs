@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D)),
+ RequireComponent(typeof(MBEntity))]
+public class MBPlayer : MonoBehaviour {
 
-public class MBPlayerMove : MonoBehaviour
-{
     [SerializeField]
     private int targetRange;
     
@@ -17,14 +17,23 @@ public class MBPlayerMove : MonoBehaviour
     private int moveSpeed;
     
     [SerializeField]
-    private Camera camera;
+    private Camera myCamera;
+
+    [SerializeField]
+    private GameObject dodgeAbilityPrefab;
     
+    private MBAbility dodgeAbility;
+
     private Rigidbody2D rigidbody2d;
-    
+    private MBEntity entity;
    
-    
-    public void Awake() {
+    /* message */ void Awake() {
         this.rigidbody2d = this.GetComponent<Rigidbody2D>();
+        this.entity = this.GetComponent<MBEntity>();
+        GameObject dodgeAbilityInstance = GameObject.Instantiate(
+            dodgeAbilityPrefab, this.transform
+        );
+        this.dodgeAbility = dodgeAbilityInstance.GetComponent<MBAbility>();
     }
     
     public void OnMoveAction(InputAction.CallbackContext context) {
@@ -34,15 +43,21 @@ public class MBPlayerMove : MonoBehaviour
             new Vector2(inputVector.x, inputVector.y) * this.moveSpeed;
     }
     
-     public void OnTargetAction(InputAction.CallbackContext context) {
+    public void OnTargetAction(InputAction.CallbackContext context) {
         // Debug.Log(context);
         Vector2 inputVector = context.ReadValue<Vector2>();
        
-        Ray ray = camera.ScreenPointToRay(
+        Ray ray = this.myCamera.ScreenPointToRay(
             new Vector3(inputVector.x, inputVector.y, 0f)
         );
         float t = - ray.origin.z / ray.direction.z;
         this.target.position = ray.origin + t * ray.direction;
-    }
-    
+    } 
+
+    public void OnDodgeAction(InputAction.CallbackContext context) {
+        Debug.Log("Dodge");
+        this.StartCoroutine(
+            this.dodgeAbility.Use(this.entity, this.target.position)
+        );
+    }   
 }

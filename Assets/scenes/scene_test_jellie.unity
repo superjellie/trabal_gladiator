@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3655039341772382548, guid: 4ef9b652c8dd7fa449ddbc62801a0097, type: 3}
       propertyPath: m_Name
-      value: tex_gladiator
+      value: tribal_gladiator
       objectReference: {fileID: 0}
     - target: {fileID: 6050993845485431533, guid: 4ef9b652c8dd7fa449ddbc62801a0097, type: 3}
       propertyPath: m_RootOrder

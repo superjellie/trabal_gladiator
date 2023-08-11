@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6050993845485431533}
+  - component: {fileID: 7833292409488355409}
+  - component: {fileID: -2201375221025970005}
   - component: {fileID: 5107158401994631808}
   - component: {fileID: 756966491584693644}
   - component: {fileID: 75688517726765005}
   - component: {fileID: 6827137058793234238}
-  - component: {fileID: -2201375221025970005}
   m_Layer: 6
   m_Name: tribal_gladiator
   m_TagString: Player
@@ -38,6 +39,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7833292409488355409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3655039341772382548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9204a8056874c6a40945f44fc9d4c7f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rngState: 43707
+  viewBlockingMask:
+    serializedVersion: 2
+    m_Bits: 768
+  moveBlockingMask:
+    serializedVersion: 2
+    m_Bits: 256
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  drawGizmo: 1
+--- !u!114 &-2201375221025970005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3655039341772382548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc952a0ffbe07042a99bbf75769d897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRange: 0
+  target: {fileID: 1568737457440305562}
+  moveSpeed: 2
+  myCamera: {fileID: 7949283136331782404}
+  dodgeAbilityPrefab: {fileID: 2068055352529745194, guid: 3a4ad5c0eecddc24bbeb4c95314931e2, type: 3}
 --- !u!212 &5107158401994631808
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -239,11 +280,27 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7aeb916d-3703-4aa4-81ca-877a69696180
     m_ActionName: Player/Target[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -2201375221025970005}
+        m_TargetAssemblyTypeName: MBPlayer, Assembly-CSharp
+        m_MethodName: OnDodgeAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b9c0ce88-4a5f-4267-9061-0a2e86eca861
+    m_ActionName: Player/Dodge[/Mouse/rightButton,/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7949283136331782404}
 --- !u!50 &6827137058793234238
 Rigidbody2D:
   serializedVersion: 4
@@ -263,30 +320,14 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 704
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-2201375221025970005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3655039341772382548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc952a0ffbe07042a99bbf75769d897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRange: 0
-  target: {fileID: 1568737457440305562}
-  moveSpeed: 2
-  camera: {fileID: 7949283136331782404}
 --- !u!1 &5511296243368313168
 GameObject:
   m_ObjectHideFlags: 0

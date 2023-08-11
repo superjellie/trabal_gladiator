@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MBMonsterAI))]
+[RequireComponent(typeof(MBEntity))]
 public class MBChasingMonster : MonoBehaviour {
     
     [SerializeField]
@@ -23,26 +23,26 @@ public class MBChasingMonster : MonoBehaviour {
     // [SerializeField]
     // private MBAbility attackAbility;
 
-    private MBMonsterAI monsterAI;
+    private MBEntity entity;
 
     /* message */ void Awake() {
-        this.monsterAI = this.GetComponent<MBMonsterAI>();
+        this.entity = this.GetComponent<MBEntity>();
     }
 
     /* message */ IEnumerator Start() {
         while (true) {
-            GameObject target = monsterAI.GetClosestVisibleEnemyInRange(
+            GameObject target = entity.GetClosestVisibleEnemyInRange(
                 this.viewRange
             );
 
             if (target == null) {
-                yield return this.StartCoroutine(monsterAI.Wander(
+                yield return this.StartCoroutine(entity.Wander(
                     this.transform.position, this.wanderRange, this.wanderSpeed
                 ));
                 continue;
             }
 
-            yield return this.StartCoroutine(monsterAI.ChaseTarget(
+            yield return this.StartCoroutine(entity.ChaseTarget(
                 target, this.attackRange, this.chasingSpeed
             )); 
                 

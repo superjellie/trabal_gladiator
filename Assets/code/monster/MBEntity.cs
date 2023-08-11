@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MBMonsterAI : MonoBehaviour {
+public class MBEntity : MonoBehaviour {
 
     [SerializeField]
     private uint rngState = 0xAABB;
@@ -16,7 +16,7 @@ public class MBMonsterAI : MonoBehaviour {
     private LayerMask moveBlockingMask;
 
     [SerializeField]
-    private LayerMask playersMask;
+    private LayerMask enemyMask;
 
     private Rigidbody2D body;
 
@@ -45,7 +45,7 @@ public class MBMonsterAI : MonoBehaviour {
     public GameObject[] GetEnemiesInRange(float range) {
         Vector2 pos = JMisc.ToVector2(this.transform.position);
         Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(
-            pos, range, this.playersMask
+            pos, range, this.enemyMask
         );
         return enemyColliders.Select(collider => collider.gameObject).ToArray();
     }
@@ -62,7 +62,7 @@ public class MBMonsterAI : MonoBehaviour {
         ).FirstOrDefault();
     }
 
-    private void DeltaMoveTo(Vector3 target, float speed) {
+    public void FixedDeltaMoveTo(Vector3 target, float speed) {
         Vector3 offset = target - this.transform.position;
         Vector3 moveby = JMisc.MinAbsComp(
             offset.normalized * speed * Time.fixedDeltaTime, offset
@@ -73,7 +73,7 @@ public class MBMonsterAI : MonoBehaviour {
     private bool      isChasingTarget = false;
     private Transform chaseTarget;
     public IEnumerator ChaseTarget(
-        GameObject target, float acceptRadius, float speed 
+        GameObject target, float acceptRadius, float speed
     ) { 
         this.isChasingTarget = true;
         this.chaseTarget = target.transform;
@@ -81,7 +81,7 @@ public class MBMonsterAI : MonoBehaviour {
             && JMisc.Distance(this.gameObject, target) > acceptRadius
         ) {
             yield return new WaitForFixedUpdate();
-            this.DeltaMoveTo(target.transform.position, speed);
+            this.FixedDeltaMoveTo(target.transform.position, speed);
         }
         this.isChasingTarget = false;
     }
@@ -107,7 +107,7 @@ public class MBMonsterAI : MonoBehaviour {
 
         while (JMisc.Distance(this.gameObject, target) > .01f) {
             yield return new WaitForFixedUpdate();
-            this.DeltaMoveTo(target, speed);
+            this.FixedDeltaMoveTo(target, speed);
         }
 
         this.isWandering = false;

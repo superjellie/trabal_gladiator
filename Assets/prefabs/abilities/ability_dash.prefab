@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3282465646498577770}
   - component: {fileID: 5278713803153631050}
-  - component: {fileID: 8828987889786267555}
   - component: {fileID: 2642208337082898326}
+  - component: {fileID: -636139273197255758}
   m_Layer: 0
-  m_Name: ability_dodge
+  m_Name: ability_dash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,20 +51,6 @@ MonoBehaviour:
   isRunning: 0
   runStartTime: 0
   runDuration: -1
---- !u!114 &8828987889786267555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068055352529745194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb722d3ff46a024b9d2c2c829122283, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 2
-  speed: 5
 --- !u!114 &2642208337082898326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +66,21 @@ MonoBehaviour:
   startParticles: {fileID: 0}
   loopParticles: {fileID: 2312147152140070116}
   endParticles: {fileID: 0}
+--- !u!114 &-636139273197255758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068055352529745194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e5769f16e7a8140b8029c785e2edd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 2
+  speed: 5
+  pushEffectPrefab: {fileID: -9217529529919015478, guid: 59d7b57ee34cbdb468ddb926edac2eb8, type: 3}
 --- !u!1 &3333530137032845844
 GameObject:
   m_ObjectHideFlags: 0

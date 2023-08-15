@@ -6,7 +6,7 @@ MonoImporter:
   defaultReferences:
   - target: {instanceID: 0}
   - myCamera: {instanceID: 0}
-  - dodgeAbility: {fileID: 5278713803153631050, guid: 3a4ad5c0eecddc24bbeb4c95314931e2, type: 3}
+  - defaultDodgePrefab: {fileID: 5278713803153631050, guid: 3a4ad5c0eecddc24bbeb4c95314931e2, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

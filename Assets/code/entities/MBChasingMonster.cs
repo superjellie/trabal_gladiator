@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MBEntity))]
+[RequireComponent(typeof(MBEntity)),
+ RequireComponent(typeof(MBCoroutineMaster))]
 public class MBChasingMonster : MonoBehaviour {
     
     [SerializeField]
@@ -24,32 +25,35 @@ public class MBChasingMonster : MonoBehaviour {
     // private MBAbility attackAbility;
 
     private MBEntity entity;
+    private MBCoroutineMaster crtnMaster;
 
     /* message */ void Awake() {
         this.entity = this.GetComponent<MBEntity>();
+        this.crtnMaster = this.GetComponent<MBCoroutineMaster>();
+        this.crtnMaster.Push("Logic", this.Process());
     }
 
-    /* message */ IEnumerator Start() {
+    private IEnumerator Process() {
         while (true) {
             GameObject target = entity.GetClosestVisibleEnemyInRange(
                 this.viewRange
             );
 
             if (target == null) {
-                yield return this.StartCoroutine(entity.Wander(
+                yield return this.crtnMaster.Push("Wander", entity.Wander(
                     this.transform.position, this.wanderRange, this.wanderSpeed
                 ));
                 continue;
             }
 
-            yield return this.StartCoroutine(entity.ChaseTarget(
+            yield return this.crtnMaster.Push("ChaseTarget", entity.ChaseTarget(
                 target, this.attackRange, this.chasingSpeed
             )); 
                 
             if (JMisc.Distance(this.gameObject, target) < this.attackRange) {
-                Debug.Log("MBChasingMonster: <color=yellow>Attacking</color> " 
-                    + target.name
-                );
+                // Debug.Log("MBChasingMonster: <color=yellow>Attacking</color> " 
+                //     + target.name
+                // );
                 yield return new WaitForSeconds(1f);
             }
         } 

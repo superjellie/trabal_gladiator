@@ -8,45 +8,40 @@ using UnityEngine.InputSystem;
 public class MBPlayer : MonoBehaviour {
 
     [SerializeField]
-    private int targetRange;
+    private float targetRange;
     
     [SerializeField]
     private Transform target;
     
     [SerializeField]
-    private int moveSpeed;
+    private float moveSpeed;
     
     [SerializeField]
     private Camera myCamera;
 
     [SerializeField]
-    private GameObject dodgeAbilityPrefab;
+    private MBAbility defaultDodgePrefab;
     
     private MBAbility dodgeAbility;
 
     private Rigidbody2D rigidbody2d;
     private MBEntity entity;
+    private Vector3 moveDirection;
    
     /* message */ void Awake() {
         this.rigidbody2d = this.GetComponent<Rigidbody2D>();
         this.entity = this.GetComponent<MBEntity>();
-        GameObject dodgeAbilityInstance = GameObject.Instantiate(
-            dodgeAbilityPrefab, this.transform
-        );
-        this.dodgeAbility = dodgeAbilityInstance.GetComponent<MBAbility>();
+        this.defaultDodgePrefab.PlaceTo(ref this.dodgeAbility, this.transform);
     }
     
     public void OnMoveAction(InputAction.CallbackContext context) {
-        // Debug.Log(context);
         Vector2 inputVector = context.ReadValue<Vector2>();
-        this.rigidbody2d.velocity = 
-            new Vector2(inputVector.x, inputVector.y) * this.moveSpeed;
+        this.moveDirection = new Vector3(inputVector.x, inputVector.y, 0f);
+        this.rigidbody2d.velocity = inputVector * this.moveSpeed;
     }
     
     public void OnTargetAction(InputAction.CallbackContext context) {
-        // Debug.Log(context);
         Vector2 inputVector = context.ReadValue<Vector2>();
-       
         Ray ray = this.myCamera.ScreenPointToRay(
             new Vector3(inputVector.x, inputVector.y, 0f)
         );
@@ -55,9 +50,11 @@ public class MBPlayer : MonoBehaviour {
     } 
 
     public void OnDodgeAction(InputAction.CallbackContext context) {
-        Debug.Log("Dodge");
-        this.StartCoroutine(
-            this.dodgeAbility.Use(this.entity, this.target.position)
-        );
+        if (!this.dodgeAbility.isRunning)
+            this.dodgeAbility.UseAsync(this.entity, 
+                this.moveDirection.magnitude > .001f ? 
+                    this.transform.position + this.moveDirection
+                    : this.target.position
+            );
     }   
 }

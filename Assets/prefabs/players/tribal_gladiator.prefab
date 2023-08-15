@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6050993845485431533}
+  - component: {fileID: 2940694052672394629}
   - component: {fileID: 7833292409488355409}
   - component: {fileID: -2201375221025970005}
   - component: {fileID: 5107158401994631808}
@@ -39,6 +40,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2940694052672394629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3655039341772382548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf0db93b0fbf854dbce5f1eef2fa73d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
 --- !u!114 &7833292409488355409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +92,7 @@ MonoBehaviour:
   target: {fileID: 1568737457440305562}
   moveSpeed: 2
   myCamera: {fileID: 7949283136331782404}
-  dodgeAbilityPrefab: {fileID: 2068055352529745194, guid: 3a4ad5c0eecddc24bbeb4c95314931e2, type: 3}
+  defaultDodgePrefab: {fileID: 5278713803153631050, guid: 3a4ad5c0eecddc24bbeb4c95314931e2, type: 3}
 --- !u!212 &5107158401994631808
 SpriteRenderer:
   m_ObjectHideFlags: 0

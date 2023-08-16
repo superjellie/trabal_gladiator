@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -55,19 +54,37 @@ public class MBEntity : MonoBehaviour {
         Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(
             pos, range, this.enemyMask
         );
-        return enemyColliders.Select(collider => collider.gameObject).ToArray();
+        GameObject[] enemies = new GameObject[enemyColliders.Length];
+        for (int i = 0; i < enemies.Length; ++i) 
+            enemies[i] = enemyColliders[i].gameObject;
+        return enemies;
     }
 
     public GameObject[] GetVisibleEnemiesInRange(float range) { 
-        return this.GetEnemiesInRange(range).Where(
-            enemy => this.IsVisible(enemy.transform.position)
-        ).ToArray();
+        List<GameObject> visibleEnemies = new List<GameObject>();
+        GameObject[] enemies = this.GetEnemiesInRange(range);
+        for (int i = 0; i < enemies.Length; ++i) {
+            if (this.IsVisible(enemies[i].transform.position))
+                visibleEnemies.Add(enemies[i]);
+        }
+        return visibleEnemies.ToArray();
     }
 
     public GameObject GetClosestVisibleEnemyInRange(float range) {
-        return this.GetVisibleEnemiesInRange(range).OrderBy(
-            go => JMisc.Distance(go, this.gameObject)
-        ).FirstOrDefault();
+        GameObject[] enemies = this.GetVisibleEnemiesInRange(range);
+
+        float minDistance = 100000f;
+        GameObject closestEnemy = null;
+
+        foreach (GameObject enemy in enemies) {
+            float distanceToEnemy = JMisc.Distance(enemy, this.gameObject);
+            if (distanceToEnemy < minDistance) {
+                minDistance = distanceToEnemy;
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy;
     }
 
     public void FixedDeltaMoveTo(Vector3 target, float speed) {
@@ -78,49 +95,94 @@ public class MBEntity : MonoBehaviour {
         this.body.MovePosition(this.transform.position + moveby);
     }
 
-    public IEnumerator MoveTo(
-        Vector3 to, float speed, System.Func<bool> whileTrue = null
+    private IEnumerator FixedUpdateCoroutine(
+        System.Action action, System.Func<bool> whileTrue
     ) {
-        whileTrue = whileTrue ?? (() => true);
-        while (JMisc.Distance(this.gameObject, to) > .0001f
-            && whileTrue()) {
-            this.FixedDeltaMoveTo(to, speed);
-            yield return new WaitForFixedUpdate();
-        }
-    } 
-
-    public IEnumerator MoveWhile(
-        Vector3 speed, System.Func<bool> whileTrue
-    ) {
-        whileTrue = whileTrue ?? (() => true);
         while (whileTrue()) {
-            this.body.MovePosition(
-                this.transform.position + speed * Time.fixedDeltaTime
-            );
+            action();
             yield return new WaitForFixedUpdate();
         }
     } 
 
-    private bool      isChasingTarget = false;
-    private Transform chaseTarget;
-    public IEnumerator ChaseTarget(
-        GameObject target, float acceptRadius, float speed
-    ) { 
-        this.isChasingTarget = true;
-        this.chaseTarget = target.transform;
-        while (this.IsVisible(target.transform.position)
-            && JMisc.Distance(this.gameObject, target) > acceptRadius
-        ) {
-            this.FixedDeltaMoveTo(target.transform.position, speed);
-            yield return new WaitForFixedUpdate();
-        }
-        this.isChasingTarget = false;
+    public JRoutine PushLogicRoutine(IEnumerator it, string name = "noname") {
+        JRoutine rtn = this.coroutineMaster.Push(
+            it, this.gameObject, this.name + ":" + name
+        );
+        return rtn;
     }
-    private bool    isWandering = false;
-    private Vector3 wanderTarget;
-    public IEnumerator Wander(
-        Vector3 pivot, float range, float speed
+
+    public JRoutine InterruptLogicRoutine(
+        IEnumerator it, GameObject master, string name = "noname"
     ) {
+        JRoutine rtn = this.coroutineMaster.Push(
+            it, master,
+            this.name + ":" + name + "[" + master.name + "]"
+        );
+        return rtn;
+    }
+
+    public JRoutine MoveTo(
+        Vector3 position, float speed,
+        System.Func<bool> whileTrue = null
+    ) {
+        whileTrue = whileTrue ?? (() => true);
+        JRoutine rtn = this.coroutineMaster.Push( 
+            this.FixedUpdateCoroutine(
+                () => this.FixedDeltaMoveTo(position, speed),
+                () => this.CanMoveTo(position)
+                    && JMisc.Distance(this.gameObject, position) > .001f
+                    && whileTrue()
+            ),
+            this.gameObject,
+            this.name + ":MoveTo"
+        );
+        return rtn;
+    }
+
+    public JRoutine ChaseTarget(
+        GameObject target, float acceptRadius, float speed,
+        System.Func<bool> whileTrue = null
+    ) { 
+        whileTrue = whileTrue ?? (() => true);
+        JRoutine rtn = this.coroutineMaster.Push( 
+            this.FixedUpdateCoroutine(
+                () => this.FixedDeltaMoveTo(target.transform.position, speed),
+                () => this.IsVisible(target.transform.position)
+                    && this.CanMoveTo(target.transform.position)
+                    && JMisc.Distance(this.gameObject, target) > acceptRadius
+                    && whileTrue()
+            ),
+            this.gameObject,
+            this.name + ":ChaseTarget"
+        );
+        return rtn;
+    }
+
+    public JRoutine MoveInDirection(
+        Vector3 direction, float speed, float duration,
+        System.Func<bool> whileTrue = null
+    ) {
+        whileTrue = whileTrue ?? (() => true);
+        float startTime = Time.time;
+        JRoutine rtn = this.coroutineMaster.Push( 
+            this.FixedUpdateCoroutine(
+                () => this.FixedDeltaMoveTo(
+                    this.transform.position + direction, speed
+                ),
+                () => Time.time - startTime < duration 
+                    && whileTrue()
+            ),
+            this.gameObject,
+            this.name + ":MoveInDirection"
+        );
+        return rtn;
+    }
+
+    public JRoutine Wander(
+        Vector3 pivot, float range, float speed,
+        System.Func<bool> whileTrue = null
+    ) {
+        whileTrue = whileTrue ?? (() => true);
         int iter = 100;
         Vector3 target;
 
@@ -130,17 +192,18 @@ public class MBEntity : MonoBehaviour {
             );
         } while (--iter > 0 && !this.CanMoveTo(target));
 
-        if (iter <= 0) yield return null;
+        if (iter <= 0) return null;
 
-        this.wanderTarget = target;
-        this.isWandering = true;
-
-        while (JMisc.Distance(this.gameObject, target) > .01f) {
-            yield return new WaitForFixedUpdate();
-            this.FixedDeltaMoveTo(target, speed);
-        }
-
-        this.isWandering = false;
+        JRoutine rtn = this.coroutineMaster.Push( 
+            this.FixedUpdateCoroutine(
+                () => this.FixedDeltaMoveTo(target, speed),
+                () => JMisc.Distance(this.gameObject, target) > .01f
+                    && whileTrue()
+            ),
+            this.gameObject,
+            this.name + ":Wander"
+        );
+        return rtn;
     }
 
     public void InvokeOnCollisionWithEnemy(UnityAction<MBEntity> handler) {
@@ -162,16 +225,16 @@ public class MBEntity : MonoBehaviour {
 
     /* message */ void OnDrawGizmos() {
         if (!this.drawGizmo) return;
-        if (this.isWandering) {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(this.transform.position, this.wanderTarget);
-            Gizmos.DrawSphere(this.wanderTarget, .1f);
-        } 
-        if (this.isChasingTarget) {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(this.transform.position, this.chaseTarget.position);
-            Gizmos.DrawSphere(this.chaseTarget.position, .1f);
-        }   
+        // if (this.isWandering) {
+        //     Gizmos.color = Color.green;
+        //     Gizmos.DrawLine(this.transform.position, this.wanderTarget);
+        //     Gizmos.DrawSphere(this.wanderTarget, .1f);
+        // } 
+        // if (this.isChasingTarget) {
+        //     Gizmos.color = Color.red;
+        //     Gizmos.DrawLine(this.transform.position, this.chaseTarget.position);
+        //     Gizmos.DrawSphere(this.chaseTarget.position, .1f);
+        // }   
     }
 #endif
 }

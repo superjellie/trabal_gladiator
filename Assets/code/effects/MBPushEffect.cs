@@ -11,30 +11,37 @@ public class MBPushEffect : MonoBehaviour {
     [SerializeField]
     private float duration = 1f;
 
-    private MBEntity target;
-    private MBCoroutineMaster crtnMaster;
+    private MBEffect effect;
     private Vector3 direction;
+
+    [SerializeField]
+    private SDamage hitWallDamage;
+
+    private MBHealth targetHealth;
+
+    /* message */ void Awake() {
+        this.effect = this.GetComponent<MBEffect>();
+    }
+
+    /* message */ void Start() {
+        this.targetHealth = this.effect.target.GetComponent<MBHealth>();
+        this.effect.target.InterruptLogicRoutine(
+            this.Push(), this.gameObject, "Push"
+        );
+    }
 
     private IEnumerator Push() {
         float startTime = Time.time;
-        yield return this.crtnMaster.Push("Push Effect Move", 
-            this.target.MoveWhile(this.direction * this.impulse, 
-                () => !this.target.IsTouchingWall(this.direction)
-                && Time.time - startTime < this.duration
-            )
+        yield return this.effect.target.MoveInDirection(
+            this.direction, this.impulse, this.duration
         );
+
+        if (this.effect.target.IsTouchingWall(this.direction))
+            this.targetHealth?.ApplyDamage(this.hitWallDamage);
         GameObject.Destroy(this.gameObject);
     }
 
-    public void ApplyTo(MBEntity entity, Vector3 direction) {
-        if (entity.GetComponentInChildren<MBPushEffect>()) return;
-        GameObject go = GameObject.Instantiate(
-            this.gameObject, entity.transform
-        );
-        MBPushEffect instance = go.GetComponent<MBPushEffect>();
-        instance.crtnMaster = entity.GetComponent<MBCoroutineMaster>();
-        instance.direction = direction;
-        instance.target = entity;
-        instance.crtnMaster.Push("Push Effect Logic", instance.Push());
+    public void Init(Vector3 direction) {
+        this.direction = direction;
     }
 }

@@ -17,24 +17,27 @@ public class MBDashAbility : MonoBehaviour {
     private MBAbility ability;
     /* message */ void Awake() {
         this.ability = this.GetComponent<MBAbility>();
+    }
+
+    /* message */ void Start() {
         this.ability.InvokeOnUse(this.Use);
         this.ability.runDuration = this.distance / this.speed;
     }
 
     private IEnumerator Use(MBEntity master, Vector3 target) { 
         Vector3 masterPos = master.transform.position;
-        Vector3 dodgeTarget = 
-            masterPos + this.distance * (target - masterPos).normalized;
+        Vector3 dodgeDirection = (target - masterPos).normalized;
+        Vector3 dodgeTarget = masterPos + this.distance * dodgeDirection;
         while (this.ability.GetRunTime() < this.ability.runDuration) {
             yield return new WaitForFixedUpdate();
             master.FixedDeltaMoveTo(dodgeTarget, this.speed);
             masterPos = master.transform.position;
-            master.InvokeOnCollisionWithEnemy(entity => 
-                pushEffectPrefab.ApplyTo(entity, 
-                    ((entity.transform.position - masterPos).normalized
-                    + (dodgeTarget - masterPos).normalized).normalized
-                )
-            );
+            master.InvokeOnCollisionWithEnemy(entity => {
+                Vector3 entityDirection = 
+                    (entity.transform.position - masterPos).normalized;
+                MBEffect.ApplyFromPrefab(pushEffectPrefab, entity)
+                    ?.Init((dodgeDirection + entityDirection).normalized);
+            });
         }
     }
 

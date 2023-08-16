@@ -29,10 +29,12 @@ public class MBChasingMonster : MonoBehaviour {
 
     /* message */ void Awake() {
         this.entity = this.GetComponent<MBEntity>();
-        this.crtnMaster = this.GetComponent<MBCoroutineMaster>();
-        this.crtnMaster.Push("Logic", this.Process());
     }
 
+    /* message */ void Start() {
+        this.entity.PushLogicRoutine(this.Process(), "ChasingMonster");
+    }
+    
     private IEnumerator Process() {
         while (true) {
             GameObject target = entity.GetClosestVisibleEnemyInRange(
@@ -40,15 +42,15 @@ public class MBChasingMonster : MonoBehaviour {
             );
 
             if (target == null) {
-                yield return this.crtnMaster.Push("Wander", entity.Wander(
+                yield return entity.Wander(
                     this.transform.position, this.wanderRange, this.wanderSpeed
-                ));
+                );
                 continue;
             }
 
-            yield return this.crtnMaster.Push("ChaseTarget", entity.ChaseTarget(
+            yield return entity.ChaseTarget(
                 target, this.attackRange, this.chasingSpeed
-            )); 
+            ); 
                 
             if (JMisc.Distance(this.gameObject, target) < this.attackRange) {
                 // Debug.Log("MBChasingMonster: <color=yellow>Attacking</color> " 

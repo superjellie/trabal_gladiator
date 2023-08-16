@@ -14,6 +14,9 @@ public class MBDodgeAbility : MonoBehaviour {
     private MBAbility ability;
     /* message */ void Awake() {
         this.ability = this.GetComponent<MBAbility>();
+    }
+
+    /* message */ void Start() {
         this.ability.InvokeOnUse(this.Use);
         this.ability.runDuration = this.distance / this.speed;
     }

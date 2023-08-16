@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2201375221025970005, guid: 4ef9b652c8dd7fa449ddbc62801a0097, type: 3}
+      propertyPath: defaultDodgePrefab
+      value: 
+      objectReference: {fileID: 5278713803153631050, guid: 963186f205e503840a60b3abd4183834, type: 3}
     - target: {fileID: 571617195790844345, guid: 4ef9b652c8dd7fa449ddbc62801a0097, type: 3}
       propertyPath: m_LocalPosition.z
       value: -10
@@ -203,6 +207,10 @@ PrefabInstance:
     - target: {fileID: 6220034126905099398, guid: 0ab5236046e63134bb598f329ec5a6ff, type: 3}
       propertyPath: m_Name
       value: level_master
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220034126905099398, guid: 0ab5236046e63134bb598f329ec5a6ff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8754194911307053989, guid: 0ab5236046e63134bb598f329ec5a6ff, type: 3}
       propertyPath: m_RootOrder

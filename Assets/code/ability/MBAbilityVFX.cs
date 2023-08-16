@@ -19,6 +19,9 @@ public class MBAbilityVFX : MonoBehaviour {
 
     /* message */ void Awake() {
         this.ability = this.GetComponent<MBAbility>();
+    }
+    
+    /* message */ void Start() {
         this.ability.InvokeOnUseAsync((entity, target) => {
             if (this.startParticles != null) this.startParticles.Play();
             if (this.loopParticles != null) this.loopParticles.Play();
